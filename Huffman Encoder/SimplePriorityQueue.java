@@ -1,0 +1,140 @@
+/**
+ * SimplePriorityQueue.java
+ * Version 1
+ * @author Andy Li
+ * April 2020
+ * Simple Queue implementation with linked list
+ */
+public class SimplePriorityQueue<E extends Comparable<E>> {
+    private Node<E> head;
+    private Node<E> tail;
+    private int size;
+     public SimplePriorityQueue(){
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+    public boolean add(E item) {
+        size++;
+        Node<E> node = new Node(item,null);
+        if(this.head == null) {
+            this.head = new Node(item,null);
+            this.tail = head;
+            return true;
+        }
+        if(item.compareTo(head.getItem()) < 0) {
+            node.setNext(head);
+            head = node;
+            return true;
+        }
+        Node<E> prevNode = this.head;
+        Node<E> curNode = this.head;
+       
+        while(curNode.getNext() != null) {
+            Node nextNode = curNode.getNext();
+            E nextItem = (E)(nextNode.getItem());
+            if(item.compareTo(nextItem) < 0) {
+                
+                curNode.setNext(node);
+                node.setNext(nextNode);
+                return true;
+                
+            }
+            prevNode = curNode;
+            curNode = curNode.getNext();
+        }
+        if(item.compareTo(tail.getItem())< 0) {
+            prevNode.setNext(node);
+            node.setNext(curNode);
+        } else {
+            curNode.setNext(node);
+            this.tail = node;
+        }
+        
+        return true;
+        
+        
+    }
+    
+    
+   
+//------------------------------------------------------------------------------  
+    public void enqueue(E item){
+        
+        Node<E> node = new Node(item,null);
+        if(head == null) {
+            this.head = node;
+            this.tail = node;
+        } else {
+            this.tail.setNext(node);
+            this.tail =  node;
+        }
+        size++;
+    }
+    
+    public E dequeue(){
+        Node<E> node = this.head;
+        this.head = node.getNext();
+        size--;
+        return node.getItem();
+       
+    }
+
+    public int size(){ 
+        return size;
+    }
+    
+    public boolean isEmpty(){
+        return size == 0;
+    }
+    public Node<E> getHead() {
+        return head;
+    }
+    public Node<E>getTail() {
+        return tail;
+    }
+    public void setHead(Node<E> head) {
+        this.head = head;
+    }
+    public void setTail(Node<E> head) {
+        this.head = head;
+    }
+//------------------------------------------------------------------------------  
+    @Override
+    public String toString(){
+        if (this.head == null){return "";}
+        Node<E> currentNode = this.head;
+        String s = currentNode.getItem().toString();
+        while(currentNode.getNext()!=null){ 
+            currentNode = currentNode.getNext();
+            s = s +", "+ currentNode.getItem().toString();
+        }
+        return "["+ s +"]";
+    }
+//------------------------------------------------------------------------------    
+    private class Node <T>{ 
+        private T item;
+        private Node<T> next;
+
+        public Node(T item, Node<T> next){
+            this.item = item;
+            this.next = next;
+        }
+    
+        public Node<T> getNext(){
+            return this.next;
+        }
+        public void setNext(Node<T> next){
+            this.next = next;
+        }
+        public T getItem(){
+            return this.item;
+        }
+        public void setItem(T item){
+            this.item = item;
+        }
+        
+    }    
+    
+}
+
