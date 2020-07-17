@@ -1,5 +1,5 @@
 /**
- * SimpleMap.java
+ * DoublyLinkedList.java
  * Version 1
  * @author Andy Li
  * April 2020
